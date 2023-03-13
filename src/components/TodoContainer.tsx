@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {
     useCreatePostMutation,
     useDeleteTodoMutation,
@@ -15,14 +15,11 @@ const TodoContainer: FC = () => {
     const [removeTodo, {}] = useDeleteTodoMutation()
 
     const handleCreate = async () => {
-        const title = prompt()
-        await createTodo({title, completed: false} as ITodo)
+        await createTodo({completed: false} as ITodo)
     }
 
     return (
         <div>
-
-            <button onClick={handleCreate}>Создать новый пост</button>
             {isLoading && <h1>Идет загрузка...</h1>}
             {isError && <h1>Ошибка...</h1>}
             <div className={'flex justify-around bg-gray-500 w-screen'}>
@@ -31,6 +28,7 @@ const TodoContainer: FC = () => {
                         !todo.completed &&
                         <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
                     ))}
+                    <button onClick={handleCreate} className='text-white px-3 py-2' type='button'>Add item</button>
                 </div>
                 <div className={'bg-yellow-400 w-[260px] line-through'}>
                     {todos?.map(todo => (
