@@ -24,6 +24,7 @@ const TodoContainer: FC = () => {
             {isError && <h1>Ошибка...</h1>}
             <div className={'flex justify-around bg-gray-500 w-screen'}>
                 <div className={'bg-red-500 w-[260px]'}>
+                    <div className='text-2xl text-center text-white'>Tasks</div>
                     {todos?.map(todo => (
                         !todo.completed &&
                         <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
@@ -31,6 +32,7 @@ const TodoContainer: FC = () => {
                     <button onClick={handleCreate} className='text-white px-3 py-2' type='button'>Add item</button>
                 </div>
                 <div className={'bg-yellow-400 w-[260px] line-through'}>
+                    <div className='text-2xl text-center text-white'>Completed</div>
                     {todos?.map(todo => (
                         todo.completed &&
                         <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
