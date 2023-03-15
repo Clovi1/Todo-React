@@ -40,7 +40,7 @@ const TodoItem: FC<TodoItemProps> = ({todo, update, remove}) => {
                 </div>
                 :
                 <div
-                    className='w-7 h-7 mx-2 mx-3 pl-0.5 rounded-full cursor-pointer transition-all hover:bg-neutral-700 flex justify-center items-center'
+                    className='w-7 h-7 mx-2 mx-3 rounded-full cursor-pointer transition-all hover:bg-neutral-700 flex justify-center items-center'
                     onClick={handleUpdate}>
                     <div className="w-4 h-4 border-2 rounded-full border-white ">
                     </div>

@@ -26,19 +26,19 @@ const TodoContainer: FC = () => {
     }
 
     return (
-        <div className={'flex justify-between w-[600px] h-[450px]'}>
-            <div className={'bg-background-color shadow rounded w-[280px] overflow-auto'}>
+        <div className={'flex justify-between w-[650px] h-[450px]'}>
+            <div className={'bg-background-color shadow rounded w-[290px] overflow-auto'}>
                 <h1 className='text-xl text-center text-white border-y border-zinc-700 p-2 mb-2'>Tasks</h1>
                 {incompleteTodos?.map(todo => (
                     <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
                 ))}
-                <button onClick={handleCreate} className='mx-2.5 px-2 py-1 rounded transition-all flex items-center text-white hover:bg-neutral-700' type='button'>
-                    <img className='w-4 mr-3' src={plus} alt="plus"/>
+                <button onClick={handleCreate} className='mx-4 px-2 py-1 rounded transition-all flex items-center text-white hover:bg-neutral-700' type='button'>
+                    <img className='w-4 mr-4' src={plus} alt="plus"/>
                     Add item
                 </button>
             </div>
 
-            <div className={'bg-background-color shadow rounded w-[280px] overflow-auto'}>
+            <div className={'bg-background-color shadow rounded w-[290px] overflow-auto'}>
                 <h1 className='text-xl text-center text-white border-y border-zinc-700 p-2 mb-2'>Completed</h1>
                 {completedTodos?.map(todo => (
                     <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
