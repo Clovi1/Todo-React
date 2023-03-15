@@ -7,37 +7,42 @@ import {
 } from "../store/todos.api";
 import TodoItem from "./TodoItem";
 import {ITodo} from "../models/models";
+import plus from '../assets/plus.svg'
+import delete_button from "../assets/delete_button.svg";
+
 
 const TodoContainer: FC = () => {
-    const {data: todos, isLoading, isError} = useGetTodoListQuery()
-    const [createTodo, {}] = useCreatePostMutation()
-    const [updateTodo, {}] = useUpdateTodoMutation()
-    const [removeTodo, {}] = useDeleteTodoMutation()
+    const {data: todos} = useGetTodoListQuery()
+
+    const incompleteTodos = todos?.filter((todo) => !todo.completed) ?? [];
+    const completedTodos = todos?.filter((todo) => todo.completed) ?? [];
+
+    const [createTodo] = useCreatePostMutation()
+    const [updateTodo] = useUpdateTodoMutation()
+    const [removeTodo] = useDeleteTodoMutation()
 
     const handleCreate = async () => {
         await createTodo({completed: false} as ITodo)
     }
 
     return (
-        <div>
-            {isLoading && <h1>Идет загрузка...</h1>}
-            {isError && <h1>Ошибка...</h1>}
-            <div className={'flex justify-around bg-gray-500 w-screen'}>
-                <div className={'bg-red-500 w-[260px]'}>
-                    <div className='text-2xl text-center text-white'>Tasks</div>
-                    {todos?.map(todo => (
-                        !todo.completed &&
-                        <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
-                    ))}
-                    <button onClick={handleCreate} className='text-white px-3 py-2' type='button'>Add item</button>
-                </div>
-                <div className={'bg-yellow-400 w-[260px] line-through'}>
-                    <div className='text-2xl text-center text-white'>Completed</div>
-                    {todos?.map(todo => (
-                        todo.completed &&
-                        <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
-                    ))}
-                </div>
+        <div className={'flex justify-between w-[600px] h-[450px]'}>
+            <div className={'bg-background-color shadow rounded w-[280px] overflow-auto'}>
+                <h1 className='text-xl text-center text-white border-y border-zinc-700 p-2 mb-2'>Tasks</h1>
+                {incompleteTodos?.map(todo => (
+                    <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
+                ))}
+                <button onClick={handleCreate} className='mx-2.5 px-2 py-1 rounded transition-all flex items-center text-white hover:bg-neutral-700' type='button'>
+                    <img className='w-4 mr-3' src={plus} alt="plus"/>
+                    Add item
+                </button>
+            </div>
+
+            <div className={'bg-background-color shadow rounded w-[280px] overflow-auto'}>
+                <h1 className='text-xl text-center text-white border-y border-zinc-700 p-2 mb-2'>Completed</h1>
+                {completedTodos?.map(todo => (
+                    <TodoItem key={todo.id} todo={todo} update={updateTodo} remove={removeTodo}/>
+                ))}
             </div>
         </div>
 
