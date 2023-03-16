@@ -1,5 +1,5 @@
 import {ITodo} from "../models/models";
-import {action, makeObservable, observable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import {addTodo, fetchTodos, removeTodo, updateTodo} from "../api/todos";
 
 export class TodosStore {
@@ -33,12 +33,6 @@ export class TodosStore {
     }
 
     constructor() {
-        makeObservable(this, {
-            todos: observable,
-            getTodos: action,
-            addTodo: action,
-            updateTodo: action,
-            removeTodo: action,
-        })
+        makeAutoObservable(this)
     }
 }

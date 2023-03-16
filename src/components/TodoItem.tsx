@@ -29,19 +29,20 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
 
     return (
         <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
-             className='flex items-center p-1.5 text-white'>
+             className='p-1.5 flex items-center text-white'>
             {todo.completed ?
                 <div
-                    className='w-7 h-7 mx-2 rounded-full cursor-pointer transition-all hover:bg-neutral-700 flex justify-center items-center'
+                    className='w-7 h-7 mx-2 flex justify-center items-center rounded-full cursor-pointer transition-all
+                    hover:bg-neutral-700 '
                     onClick={handleUpdate}>
                     <img className='w-3.5' src={check_mark} alt="delete"/>
                 </div>
                 :
                 <div
-                    className='w-7 h-7 mx-2 mx-3 rounded-full cursor-pointer transition-all hover:bg-neutral-700 flex justify-center items-center'
+                    className='w-7 h-7 mx-2 mx-3 flex justify-center items-center rounded-full cursor-pointer
+                    transition-all hover:bg-neutral-700 '
                     onClick={handleUpdate}>
-                    <div className="w-4 h-4 border-2 rounded-full border-white ">
-                    </div>
+                    <div className="w-4 h-4 border-2 rounded-full border-white "></div>
                 </div>
             }
 
