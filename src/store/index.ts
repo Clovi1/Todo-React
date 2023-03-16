@@ -1,11 +1,10 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {setupListeners} from "@reduxjs/toolkit/query";
-import {todoApi} from "./todos.api";
+import {injectStores} from "@mobx-devtools/tools";
+import {TodosStore} from "./todosStore";
 
-export const store = configureStore({
-    reducer: {
-        [todoApi.reducerPath]: todoApi.reducer
-    },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(todoApi.middleware)
+const todosStore = new TodosStore()
+
+injectStores({
+    todosStore
 })
 
+export {todosStore}
