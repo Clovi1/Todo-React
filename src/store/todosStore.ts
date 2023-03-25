@@ -12,6 +12,10 @@ export class TodosStore {
         }
     }
 
+    get incompleteTodos(){
+        return this.todos.filter((todo)=>!todo.completed)
+    }
+
     async addTodo(todo: ITodo) {
         const data = await addTodo(todo)
         if (data) {

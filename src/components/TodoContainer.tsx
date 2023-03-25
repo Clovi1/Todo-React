@@ -11,7 +11,7 @@ const TodoContainer: FC = () => {
         todosStore.getTodos()
     }, [])
 
-    const incompleteTodos = todosStore.todos?.filter(todo => !todo.completed) ?? [];
+    // const incompleteTodos = todosStore.todos?.filter(todo => !todo.completed) ?? [];
     const completedTodos = todosStore.todos?.filter(todo => todo.completed) ?? [];
 
     const handleCreate = async () => {
@@ -23,7 +23,7 @@ const TodoContainer: FC = () => {
         <div className={'w-[650px] h-[450px] flex justify-between'}>
             <div className={'w-[290px] bg-background-color shadow rounded overflow-auto'}>
                 <h1 className='p-2 mb-2 text-xl text-center text-white border-y border-zinc-700'>Tasks</h1>
-                {incompleteTodos?.map(todo => (
+                {todosStore.incompleteTodos?.map(todo => (
                     <TodoItem key={todo.id} todo={todo}/>
                 ))}
                 <button onClick={handleCreate}
