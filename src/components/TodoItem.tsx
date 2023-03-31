@@ -1,22 +1,25 @@
 import React, {FC, useState} from 'react';
-import {ITodo} from "../models/models";
 import delete_button from '../assets/delete_button.svg'
 import check_mark from '../assets/check_mark.svg'
 import {useDebounce} from "../hooks/debounce";
 import useDidMountEffect from "../hooks/didMount";
 import {observer} from "mobx-react";
-import {todosStore} from "../store";
+import {ITodoModel} from "../mst/interfaces";
+import {useRootStore} from "../mst/store/RootStore.store";
 
 interface TodoItemProps {
-    todo: ITodo,
+    todo: ITodoModel,
 }
 
 const TodoItem: FC<TodoItemProps> = ({todo}) => {
     const [value, setValue] = useState(todo.title)
     const [isHovered, setIsHovered] = useState(false)
     const debounce = useDebounce(value)
-    const handleUpdate = async () => {
-        await todosStore.updateTodo({...todo, completed: !todo.completed})
+
+    const {removeTodo} = useRootStore()
+
+    const handleToggle = () => {
+        todo?.toggle();
     }
 
     const handleUpdateTodo = (value: string) => {
@@ -24,7 +27,7 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
     }
 
     useDidMountEffect(() => {
-        todosStore.updateTodo({...todo, title: debounce})
+        todo?.setTitle(debounce);
     }, [debounce])
 
     return (
@@ -34,14 +37,14 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
                 <div
                     className='w-7 h-7 mx-2 flex justify-center items-center rounded-full cursor-pointer transition-all
                     hover:bg-neutral-700 '
-                    onClick={handleUpdate}>
+                    onClick={handleToggle}>
                     <img className='w-3.5' src={check_mark} alt="delete"/>
                 </div>
                 :
                 <div
                     className='w-7 h-7 mx-2 mx-3 flex justify-center items-center rounded-full cursor-pointer
                     transition-all hover:bg-neutral-700 '
-                    onClick={handleUpdate}>
+                    onClick={handleToggle}>
                     <div className="w-4 h-4 border-2 rounded-full border-white "></div>
                 </div>
             }
@@ -51,7 +54,7 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
                    type="text" value={value}/>
             {isHovered &&
                 <img className='w-3.5 ml-3 cursor-pointer opacity-50 transition-all hover:opacity-100'
-                     onClick={() => todosStore.removeTodo(todo.id)}
+                     onClick={() => removeTodo(todo.id)}
                      src={delete_button} alt="delete"/>
             }
         </div>

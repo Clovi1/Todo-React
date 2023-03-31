@@ -1,21 +1,19 @@
 import React, {FC, useEffect} from 'react';
 import TodoItem from "./TodoItem";
-import {ITodo} from "../models/models";
 import plus from '../assets/plus.svg'
-import {todosStore} from "../store";
 import {observer} from "mobx-react";
+import {useRootStore} from "../mst/store/RootStore.store";
 
 
 const TodoContainer: FC = () => {
+    const {incompleteTodos, completedTodos, addTodo, fetchTodos} = useRootStore()
+
     useEffect(() => {
-        todosStore.getTodos()
+        fetchTodos()
     }, [])
 
-    // const incompleteTodos = todosStore.todos?.filter(todo => !todo.completed) ?? [];
-    const completedTodos = todosStore.todos?.filter(todo => todo.completed) ?? [];
-
-    const handleCreate = async () => {
-        await todosStore.addTodo({title: '', completed: false} as ITodo)
+    const handleCreate = () => {
+        addTodo()
     }
 
 
@@ -23,7 +21,7 @@ const TodoContainer: FC = () => {
         <div className={'w-[650px] h-[450px] flex justify-between'}>
             <div className={'w-[290px] bg-background-color shadow rounded overflow-auto'}>
                 <h1 className='p-2 mb-2 text-xl text-center text-white border-y border-zinc-700'>Tasks</h1>
-                {todosStore.incompleteTodos?.map(todo => (
+                {incompleteTodos?.map(todo => (
                     <TodoItem key={todo.id} todo={todo}/>
                 ))}
                 <button onClick={handleCreate}
